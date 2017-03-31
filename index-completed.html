@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>MyHomestay</title>
+		
+	<style>
+		body {
+			color: #484848;
+		}	
+
+		.price {
+			font-weight: bold;
+		}
+
+		img {
+			width:100%;
+		}
+
+		h1 {
+			font-size:20px;
+		}
+
+		#search {
+			border:1px solid #dce0e0;
+			width: 100%;
+			margin-top:50px;
+			margin-bottom:50px;
+		}
+
+		#search td {
+			width: 25%;
+			padding: 20px;
+			border-right: 1px solid #dce0e0;
+		}
+
+		.selected {
+			border:2px solid #fd5c63 ;
+		}
+	</style>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+</head>
+
+<body>
+
+	<div class="container">
+	
+		<div class="row">
+			<div class="col-md-12">
+				<h1><span style='color:#fd5c63'>Travelling?</span> Find your next homestay on MyHomeStay</h1>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<table id='search'>
+					<tr>
+						<td>Email? <br/><input type='text' placeholder='Your email' id='email'> </td>	
+						<td>When ?<br/> <input type='date' placeholder='When do you arrive' id='date'></td>
+						<td>How many days ?<br/> <input type='number' placeholder="For how many days?" id='days'></td>
+						<td>
+							How many guests? <br/><input type='number' placeholder="No. of guests" style='width:120px' id='guests'>
+							<button class='btn btn-primary' id='btnBook'>Book</button>
+						</td>
+					</tr>
+				</table>
+			</div>			
+		</div>
+
+		<div class="row">
+
+			<div class="col-md-12">
+				<h2>Popular Activities</h2>
+			</div>
+			
+
+			<div class="col-md-3">				
+				<img src="images/penang_mural.jpg" alt="">
+				<div><span class='price'>RM 89</span> 2 hours &bull; Penang Mural Tour </div>
+			</div>
+
+			<div class="col-md-3">
+				<img src="images/ipoh_caves.jpg" alt="">
+				<div><span class='price'>RM 69</span> 3 hours &bull; Ipoh Caves Walk </div>
+			</div>
+
+			<div class="col-md-3">				<img src="images/sabah_island_hopping.jpg" alt="">
+				<div><span class='price'>RM 495</span> per day &bull; Sabah Island Hopping</div>				
+			</div>
+
+			<div class="col-md-3">
+				<img src="images/johor_cultural_tour.jpg" alt="">
+				<div><span class='price'>RM 127</span> 3 hours &bull; Johor Food and Cultural Tour</div>
+			</div>
+
+
+		<div class="col-md-12">
+			<h2>Just Booked</h2>
+		</div>
+
+		<div class="col-md-3">
+			<img src="images/penang_homestay.jpg" alt="">
+			<div><span class='price'>RM 88</span> per night &bull; Penang Heritage Homestay</div>
+		</div>
+
+		<div class="col-md-3">
+			<img src="images/malacca_peranakan.jpg" alt="">
+			<div><span class='price'>RM 119</span> per night &bull; Melaka Baba House</div>
+		</div>
+
+		<div class="col-md-3">
+			<img src="images/mersing_jungle.jpg" alt="">
+			<div><span class='price'>RM 129</span> per night &bull; Mersing Jungle Stay Experience</div>
+		</div>
+
+		<div class="col-md-3">
+			<img src="images/johor_luxury.jpg" alt="">
+			<div><span class='price'>RM 159</span> per night &bull; Luxury English Style Accomodation</div>
+		</div>
+
+	</div>
+
+	<!-- JavaScript usually added at the end of a HTML page, to make sure that all HTML elements are loaded and visible, before executing the scripts-->
+
+	<script>
+		$('img').on('click', function() {
+			$('img').removeClass('selected');
+			$(this).addClass('selected');
+		})
+	</script>
+
+
+<script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDR8kcbn1eXSOIKgRIbY7DQe1YJG9A0M9M",
+    authDomain: "webinar-b2a4f.firebaseapp.com",
+    databaseURL: "https://webinar-b2a4f.firebaseio.com",
+    storageBucket: "webinar-b2a4f.appspot.com",
+    messagingSenderId: "521781139603"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script>
+	$('#btnBook').on('click', function() {
+		var email = $('#email').val();
+		var date = $('#date').val();
+		var days = $('#days').val();
+		var guests = $('#guests').val();
+		
+		// We extract venue by selecting the `selected` class, and the text of its next element
+		var venue = $('.selected').next().text();
+
+		var bookings = firebase.database().ref('bookings')
+		bookings.push().set({
+		  email,
+			venue,
+			date,
+			days,
+			guestsin
+		}, 
+		function() {   // A function that will be called after the set() command.
+			alert('Your booking have been accepted!')
+		})
+	})
+</script>
+
+</body>
+</html>
